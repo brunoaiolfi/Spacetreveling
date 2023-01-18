@@ -6,7 +6,7 @@ import Info from "../Info";
 
 export function PostResume({ data, first_publication_date, uid }: Post) {
     return (
-        <Link href={`/posts/${uid}`} key={uid}>
+        <Link href={`/post/${uid}`} key={uid}>
             <a key={uid} className={styles.container}>
                 <strong className={styles.title}>{data.title}</strong>
                 <p className={styles.description}>{data.subtitle}</p>

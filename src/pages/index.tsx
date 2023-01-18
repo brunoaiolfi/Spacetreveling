@@ -90,7 +90,6 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   );
 
-  console.log(postsResponse.results);
 
   const posts: Post[] = parseResult(postsResponse.results)
 

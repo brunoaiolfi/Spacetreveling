@@ -1,1 +1,61 @@
 // TODO
+.postContainer {
+    max-width: 720px;
+    margin: 0 auto 5rem;
+  
+  }
+  
+  .postTitle {
+    font-size: 3.625rem;
+    font-weight: bold;
+    color: var(--title);
+  }
+  
+  .postContent {
+    margin-top: 4rem;
+  
+    .contentHeading {
+      font-size: 2.25rem;
+      font-weight: bold;
+      color: var(--title);
+    }
+  
+    div {
+      font-size: 1.125rem;
+      line-height: 2rem;
+      text-align: justify;
+  
+      p, li {
+        margin-top: 1.5rem;
+      }
+    }
+  
+  }
+  
+  .infos {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+  
+    svg {
+      animation: rotation 3s infinite linear;
+    }
+    span {
+      margin-left: 0.5rem;
+    }
+  }
+  
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
