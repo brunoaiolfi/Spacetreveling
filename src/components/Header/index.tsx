@@ -4,13 +4,11 @@ import Link from 'next/link'
 export function Header() {
     return (
         <header className={styles.headerContainer}>
-            <div className={styles.headerContent}>
-                <Link href="/">
-                    <a>
-                        <img src="/images/logo.svg" alt="logo" />
-                    </a>
-                </Link>
-            </div>
+            <Link href="/">
+                <a className={styles.headerContent}>
+                    <img src="/images/logo.svg" alt="logo" />
+                </a>
+            </Link>
         </header>
     )
 }

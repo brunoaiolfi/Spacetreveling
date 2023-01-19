@@ -39,29 +39,29 @@ function parseResult(result: PrismicDocument<Record<string, any>, string, string
   return posts;
 }
 
+const ACCESS_TOKEN = encodeURIComponent(process.env.PRISMIC_ACCESS_TOKEN);
+
 export default function Home({ postsPagination }: HomeProps): JSX.Element {
 
   const [posts, setPosts] = useState(postsPagination?.results ?? [])
-  async function fetchData() {
-    try {
-      const prismic = getPrismicClient({});
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [nextPage, setNextPage] = useState(postsPagination.next_page);
 
-      const postsResponse = await prismic.getByType("aiolfiposts", {
-        fetch: ['posts.title', 'posts.subtitle', 'posts.author'],
+  const handleLoadMorePosts = (): void => {
+    setLoadingMore(true);
+    console.log(nextPage)
+    fetch(`${nextPage}&access_token=${ACCESS_TOKEN}`)
+      .then(result => result.json())
+      .then(response => {
+        setPosts([...posts, ...parseResult(response.results)]);
+        setNextPage(response.next_page);
+        setLoadingMore(false);
       })
-
-      const posts: Post[] = parseResult(postsResponse.results);
-
-      const data: PostPagination = {
-        next_page: postsResponse.next_page,
-        results: posts
-      }
-
-      return data;
-    } catch (error) {
-      console.log(error)
-    }
-  }
+      .catch(error => {
+        setLoadingMore(false);
+        alert(`Error fetching more posts: ${error.message}`);
+      });
+  };
 
   return (
     <main className={styles.container}>
@@ -77,6 +77,16 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
           ))
         }
       </div>
+      {!!nextPage && (
+        <button
+          type="button"
+          disabled={loadingMore}
+          onClick={handleLoadMorePosts}
+          className={styles.loadingMore}
+        >
+          {loadingMore ? 'Carregando...' : 'Carregar mais posts'}
+        </button>
+      )}
     </main>
   );
 }
@@ -86,7 +96,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const postsResponse = await prismic.getByType("aiolfiposts",
     {
       fetch: ['posts.title', 'posts.subtitle', 'posts.author'],
-      pageSize: 5,
+      pageSize: 1,
     }
   );
 
