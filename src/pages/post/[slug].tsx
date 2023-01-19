@@ -11,6 +11,7 @@ import styles from './post.module.scss';
 import Info from '../../components/Info';
 import Banner from '../../components/Banner';
 import { formatDate } from '../../utils/dates';
+import  Header  from '../../components/Header';
 
 interface Post {
   first_publication_date: string | null;
@@ -65,6 +66,8 @@ export default function Post({ post }: PostProps) {
 
   return (
     <>
+      <Header />
+
       <Banner src={post.data.banner.url} alt="post banner" />
       <main className={commonStyles.container}>
         <div className={styles.postContainer}>

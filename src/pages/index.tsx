@@ -9,6 +9,7 @@ import styles from './home.module.scss';
 import { PrismicDocument } from '@prismicio/types';
 import { Post } from '../models/interface/Post';
 import { PostResume } from '../components/PostResume';
+import Header from '../components/Header';
 
 
 
@@ -64,30 +65,33 @@ export default function Home({ postsPagination }: HomeProps): JSX.Element {
   };
 
   return (
-    <main className={styles.container}>
-      <div className={styles.posts} >
-        {
-          posts.map(({ data, first_publication_date, uid }) =>
-          (
-            <PostResume
-              data={data}
-              first_publication_date={first_publication_date}
-              uid={uid}
-            />
-          ))
-        }
-      </div>
-      {!!nextPage && (
-        <button
-          type="button"
-          disabled={loadingMore}
-          onClick={handleLoadMorePosts}
-          className={styles.loadingMore}
-        >
-          {loadingMore ? 'Carregando...' : 'Carregar mais posts'}
-        </button>
-      )}
-    </main>
+    <>
+      <Header />
+      <main className={styles.container}>
+        <div className={styles.posts} >
+          {
+            posts.map(({ data, first_publication_date, uid }) =>
+            (
+              <PostResume
+                data={data}
+                first_publication_date={first_publication_date}
+                uid={uid}
+              />
+            ))
+          }
+        </div>
+        {!!nextPage && (
+          <button
+            type="button"
+            disabled={loadingMore}
+            onClick={handleLoadMorePosts}
+            className={styles.loadingMore}
+          >
+            {loadingMore ? 'Carregando...' : 'Carregar mais posts'}
+          </button>
+        )}
+      </main>
+    </>
   );
 }
 
